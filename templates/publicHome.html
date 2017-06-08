@@ -1,0 +1,57 @@
+{% extends "main.html" %}
+{% block content %}
+	<div class="row top-menu">
+		<div class="col-md-10"></div>
+		<div class="col-md-2 text-right">
+			<a href="{{url_for('showLogin')}}">Click Here to Log in </a>
+		</div>
+	</div>
+	<div class="row divider blue">
+		<div class="col-md-12"></div>
+	</div>
+	<div class="row banner main">
+	</div>
+		<div class = 'flash'>
+		{% with messages = get_flashed_messages() %}
+	  		{% if messages %}
+
+	    		<ul>
+	    		{% for message in messages %}
+	        		<li> <strong> {{ message }} </strong> </li>
+	    		{% endfor %}
+	    		</ul>
+	    	{% endif %}
+		{% endwith %}
+	</div>
+	<div class="row">
+	    <div class="col-xs-6"><h1>Categories</h1>
+			{% for category in categories %}
+				<div class="col-md-12 category-list">
+					<a href = "{{url_for('showItems',  category_name = category.name)}}">
+						<div class="row">
+							<div class="col-md-12 category-list">
+								<h3>{{category.name}}</h3>
+							</div>
+						</div>
+					</a>
+				</div>
+			{% endfor %}
+	    </div>
+ <div class="col-xs-6"><h1>Recently Added Items</h1>
+	    	{% set counter = 0 %}
+			{% for latest in latest_items %}
+
+				<div class="col-md-12 item-list">
+					<a href = "{{url_for('showItemDesc', item_id = latest.id)}}">
+						<div class="row">
+							<div class="col-md-12 item-list">
+								<h3>{{latest.title}} ({{latest.category.name}})</h3>
+							</div>
+						</div>
+					</a>
+				</div>
+				{% set counter = counter + 1 %}
+				{% endfor %}
+	    </div>
+	</div>
+{% endblock %}
